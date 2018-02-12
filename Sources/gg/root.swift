@@ -5,8 +5,10 @@ var rootCommand = Command(
 
 private func configuration(command: Command) {
 
+  let version = Flag(shortName: "v", longName: "version", value: false, description: "Prints the version")
+
   command.add(flags: [
-    // Add your flags here
+      version
     ]
   )
 
@@ -15,5 +17,10 @@ private func configuration(command: Command) {
 
 private func execute(flags: Flags, args: [String]) {
   // Execute code here
-  print("gg called")
+  if let version = flags.getBool(name: "version"), version {
+    print("Version 0.0.1")
+  } else {
+    // Error happened
+    rootCommand.fail(statusCode: 1, errorMessage: "Some error happaned")
+  }
 }
